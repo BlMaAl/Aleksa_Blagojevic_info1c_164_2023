@@ -116,7 +116,7 @@ def film_update_wtf():
             # Afficher seulement le film modifié, "ASC" et l'"id_film_update"
             return redirect(url_for('films_genres_afficher', id_film_sel=id_film_update))
         elif request.method == "GET":
-            # Opération sur la BD pour récupérer "id_film" et "intitule_genre" de la "t_genre"
+            # Opération sur la BD pour récupérer "id_film" et "nom_user" de la "utilisateur"
             str_sql_id_film = "SELECT * FROM t_film WHERE id_film = %(value_id_film)s"
             valeur_select_dictionnaire = {"value_id_film": id_film_update}
             with DBconnection() as mybd_conn:
@@ -187,10 +187,10 @@ def film_delete_wtf():
             valeur_delete_dictionnaire = {"value_id_film": id_film_delete}
             print("valeur_delete_dictionnaire ", valeur_delete_dictionnaire)
 
-            str_sql_delete_fk_film_genre = """DELETE FROM t_genre_film WHERE fk_film = %(value_id_film)s"""
+            str_sql_delete_fk_film_genre = """DELETE FROM utilisateur_film WHERE fk_film = %(value_id_film)s"""
             str_sql_delete_film = """DELETE FROM t_film WHERE id_film = %(value_id_film)s"""
-            # Manière brutale d'effacer d'abord la "fk_film", même si elle n'existe pas dans la "t_genre_film"
-            # Ensuite on peut effacer le film vu qu'il n'est plus "lié" (INNODB) dans la "t_genre_film"
+            # Manière brutale d'effacer d'abord la "fk_film", même si elle n'existe pas dans la "utilisateur_film"
+            # Ensuite on peut effacer le film vu qu'il n'est plus "lié" (INNODB) dans la "utilisateur_film"
             with DBconnection() as mconn_bd:
                 mconn_bd.execute(str_sql_delete_fk_film_genre, valeur_delete_dictionnaire)
                 mconn_bd.execute(str_sql_delete_film, valeur_delete_dictionnaire)

@@ -38,7 +38,7 @@ class MonPremierWTForm(FlaskForm):
     Dans le formulaire "templates/zzz_essais_om_104/demo_form_select_wtf.html"
     Auteur : OM 2021.04.11
     
-    But : Montrer l'utilisation d'une liste déroulante (WTF) dont le contenu est basé sur la table "t_genre"
+    But : Montrer l'utilisation d'une liste déroulante (WTF) dont le contenu est basé sur la table "utilisateur"
     
 """
 
@@ -54,4 +54,4 @@ class DemoFormSelectWTF(FlaskForm):
     #                                   validate_choice=False,
     #                                   coerce=int
     #                                   )
-    submit_btn_ok_dplist_genre = SubmitField("Choix genre")
+    submit_btn_ok_dplisutilisateur = SubmitField("Choix genre")
