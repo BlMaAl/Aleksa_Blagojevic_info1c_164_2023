@@ -21,7 +21,7 @@ class MonPremierWTForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired(message="Il manque le mot de passe !!!")])
 
     nom_genre_regexp = "^([A-Z]|[a-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ]*['\- ]?[A-Za-zÀ-ÖØ-öø-ÿ]+$"
-    nom_genre_wtf = StringField("Clavioter le genre ", validators=[Length(min=2, max=20, message="min 2 max 20"),
+    nom_genre_wtf = StringField("Mettre le texte à convertire ", validators=[Length(min=2, max=100, message="min 2 max 100"),
                                                                    Regexp(nom_genre_regexp,
                                                                           message="Pas de chiffres, de caractères "
                                                                                   "spéciaux, d'espace à double, "
