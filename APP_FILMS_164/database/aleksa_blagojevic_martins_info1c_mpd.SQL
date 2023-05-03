@@ -102,7 +102,7 @@ CREATE TABLE `réponse` (
 -- Structure de la table `utilisateur`
 --
 
-CREATE TABLE `utilisateur` (
+CREATE TABLE `t_utilisateur` (
   `id_user` int(11) NOT NULL,
   `nom_user` text NOT NULL,
   `email_user` text NOT NULL,
@@ -140,7 +140,7 @@ ALTER TABLE `réponse`
 --
 -- Index pour la table `utilisateur`
 --
-ALTER TABLE `utilisateur`
+ALTER TABLE `t_utilisateur`
   ADD PRIMARY KEY (`id_user`);
 
 --
@@ -174,7 +174,7 @@ ALTER TABLE `réponse`
 --
 -- AUTO_INCREMENT pour la table `utilisateur`
 --
-ALTER TABLE `utilisateur`
+ALTER TABLE `t_utilisateur`
   MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 

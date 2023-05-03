@@ -35,7 +35,7 @@ def films_genres_afficher(id_film_sel):
                 strsql_genres_films_afficher_data = """SELECT id_film, nom_film, duree_film, description_film, cover_link_film, date_sortie_film,
                                                             GROUP_CONCAT(nom_user) as GenresFilms FROM utilisateur_film
                                                             RIGHT JOIN t_film ON t_film.id_film = utilisateur_film.fk_film
-                                                            LEFT JOIN utilisateur ON utilisateur.id_user = utilisateur_film.fk_genre
+                                                            LEFT JOIN t_utilisateur ON t_utilisateur.id_user = utilisateur_film.fk_genre
                                                             GROUP BY id_film"""
                 if id_film_sel == 0:
                     # le paramètre 0 permet d'afficher tous les films
@@ -93,7 +93,7 @@ def ediutilisateur_film_selected():
     if request.method == "GET":
         try:
             with DBconnection() as mc_afficher:
-                strsql_genres_afficher = """SELECT id_user, nom_user FROM utilisateur ORDER BY id_user ASC"""
+                strsql_genres_afficher = """SELECT id_user, nom_user FROM t_utilisateur ORDER BY id_user ASC"""
                 mc_afficher.execute(strsql_genres_afficher)
             data_genres_all = mc_afficher.fetchall()
             print("dans ediutilisateur_film_selected ---> data_genres_all", data_genres_all)
@@ -169,7 +169,7 @@ def ediutilisateur_film_selected():
     Récupère la liste de tous les genres du film sélectionné par le bouton "MODIFIER" de "films_genres_afficher.html"
     
     Dans une liste déroulante particulière (tags-selector-tagselect), on voit :
-    1) Tous les genres contenus dans la "utilisateur".
+    1) Tous les genres contenus dans la "t_utilisateur".
     2) Les genres attribués au film selectionné.
     3) Les genres non-attribués au film sélectionné.
 
@@ -278,17 +278,17 @@ def genres_films_afficher_data(valeur_id_film_selected_dict):
 
         strsql_film_selected = """SELECT id_film, nom_film, duree_film, description_film, cover_link_film, date_sortie_film, GROUP_CONCAT(id_user) as GenresFilms FROM utilisateur_film
                                         INNER JOIN t_film ON t_film.id_film = utilisateur_film.fk_film
-                                        INNER JOIN utilisateur ON utilisateur.id_user = utilisateur_film.fk_genre
+                                        INNER JOIN t_utilisateur ON t_utilisateur.id_user = utilisateur_film.fk_genre
                                         WHERE id_film = %(value_id_film_selected)s"""
 
-        strsql_genres_films_non_attribues = """SELECT id_user, nom_user FROM utilisateur WHERE id_user not in(SELECT id_user as idGenresFilms FROM utilisateur_film
+        strsql_genres_films_non_attribues = """SELECT id_user, nom_user FROM t_utilisateur WHERE id_user not in(SELECT id_user as idGenresFilms FROM utilisateur_film
                                                     INNER JOIN t_film ON t_film.id_film = utilisateur_film.fk_film
-                                                    INNER JOIN utilisateur ON utilisateur.id_user = utilisateur_film.fk_genre
+                                                    INNER JOIN t_utilisateur ON t_utilisateur.id_user = utilisateur_film.fk_genre
                                                     WHERE id_film = %(value_id_film_selected)s)"""
 
         strsql_genres_films_attribues = """SELECT id_film, id_user, nom_user FROM utilisateur_film
                                             INNER JOIN t_film ON t_film.id_film = utilisateur_film.fk_film
-                                            INNER JOIN utilisateur ON utilisateur.id_user = utilisateur_film.fk_genre
+                                            INNER JOIN t_utilisateur ON t_utilisateur.id_user = utilisateur_film.fk_genre
                                             WHERE id_film = %(value_id_film_selected)s"""
 
         # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
