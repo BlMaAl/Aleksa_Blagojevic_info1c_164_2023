@@ -18,6 +18,13 @@
 							<span style="color: red;">[{{ error }}]</span>
 						{% endfor %}
 					</p>
+					<p>
+						{{ form.email_texte_wtf.label }}<br>
+						{{ form.email_texte_wtf(size=32) }}<br>
+						{% for error in form.email_texte_wtf.errors %}
+							<span style="color: red;">[{{ error }}]</span>
+						{% endfor %}
+					</p>
 				</div>
 				{{ form.submit(class="btn btn-primary") }}
 			</form>

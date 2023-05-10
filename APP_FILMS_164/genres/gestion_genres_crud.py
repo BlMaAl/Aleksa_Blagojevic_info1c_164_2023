@@ -34,7 +34,7 @@ def genres_afficher(order_by, id_user_sel):
         try:
             with DBconnection() as mc_afficher:
                 if order_by == "ASC" and id_user_sel == 0:
-                    strsql_genres_afficher = """SELECT id_user, nom_user, email_user FROM t_utilisateur ORDER BY id_user ASC"""
+                    strsql_genres_afficher = """SELECT id_user, nom_user, email_user, password FROM t_utilisateur ORDER BY id_user ASC"""
                     mc_afficher.execute(strsql_genres_afficher)
                 elif order_by == "ASC":
                     # C'EST LA QUE VOUS ALLEZ DEVOIR PLACER VOTRE PROPRE LOGIQUE MySql
@@ -43,11 +43,11 @@ def genres_afficher(order_by, id_user_sel):
                     # donc, je précise les champs à afficher
                     # Constitution d'un dictionnaire pour associer l'id du genre sélectionné avec un nom de variable
                     valeur_id_user_selected_dictionnaire = {"value_id_user_selected": id_user_sel}
-                    strsql_genres_afficher = """SELECT id_user, nom_user, email_user  FROM t_utilisateur WHERE id_user = %(value_id_user_selected)s"""
+                    strsql_genres_afficher = """SELECT id_user, nom_user, email_user, password  FROM t_utilisateur WHERE id_user = %(value_id_user_selected)s"""
 
                     mc_afficher.execute(strsql_genres_afficher, valeur_id_user_selected_dictionnaire)
                 else:
-                    strsql_genres_afficher = """SELECT id_user, nom_user, email_user  FROM t_utilisateur ORDER BY id_user DESC"""
+                    strsql_genres_afficher = """SELECT id_user, nom_user, email_user, password  FROM t_utilisateur ORDER BY id_user DESC"""
 
                     mc_afficher.execute(strsql_genres_afficher)
 
@@ -103,10 +103,15 @@ def genres_ajouter_wtf():
             if form.validate_on_submit():
                 name_genre_wtf = form.nom_genre_wtf.data
                 name_genre = name_genre_wtf.lower()
-                valeurs_insertion_dictionnaire = {"value_nom_user": name_genre}
+                email_texte_wtf = form.email_texte_wtf.data
+                email_texte = email_texte_wtf.lower()
+
+                valeurs_insertion_dictionnaire = {"value_nom_user": name_genre,
+                                                  "value_email_user": email_texte
+                                                  }
                 print("valeurs_insertion_dictionnaire ", valeurs_insertion_dictionnaire)
 
-                strsql_inserutilisateur = """INSERT INTO t_utilisateur (id_user,nom_user) VALUES (NULL,%(value_nom_user)s) """
+                strsql_inserutilisateur = """INSERT INTO t_utilisateur (id_user,nom_user, email_user) VALUES (NULL,%(value_nom_user)s) """
                 with DBconnection() as mconn_bd:
                     mconn_bd.execute(strsql_inserutilisateur, valeurs_insertion_dictionnaire)
 
@@ -179,7 +184,7 @@ def genre_update_wtf():
             return redirect(url_for('genres_afficher', order_by="ASC", id_user_sel=id_user_update))
         elif request.method == "GET":
             # Opération sur la BD pour récupérer "id_user" et "nom_user" de la "utilisateur"
-            str_sql_id_user = "SELECT id_user, nom_user, email_user FROM t_utilisateur " \
+            str_sql_id_user = "SELECT id_user, nom_user, email_user, password FROM t_utilisateur " \
                                "WHERE id_user = %(value_id_user)s"
             valeur_select_dictionnaire = {"value_id_user": id_user_update}
             with DBconnection() as mybd_conn:

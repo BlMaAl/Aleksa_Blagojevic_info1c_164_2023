@@ -28,13 +28,7 @@ class MonPremierWTForm(FlaskForm):
                                                                                   "de double apostrophe, "
                                                                                   "de double trait union")
                                                                    ])
-    email_texte = StringField("Mettre le texte à convertire ",validators=[Length(min=2, max=100, message="min 2 max 100"),
-                                                                    Regexp(nom_genre_regexp,
-                                                                            message="Pas de chiffres, de caractères "
-                                                                                    "spéciaux, d'espace à double, "
-                                                                                    "de double apostrophe, "
-                                                                                    "de double trait union")
-                                                                    ])
+
 
 
     case_cocher_npc = BooleanField('Ne pas cliquer')
