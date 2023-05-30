@@ -12,7 +12,7 @@ from flask import url_for
 from APP_FILMS_164 import app
 from APP_FILMS_164.database.database_tools import DBconnection
 from APP_FILMS_164.erreurs.exceptions import *
-from APP_FILMS_164.genres.gestion_genres_wtf_forms import FormWTFAjouterGenres
+from APP_FILMS_164.genres.gestion_genres_wtf_forms import AjouterUtilisateur
 from APP_FILMS_164.genres.gestion_genres_wtf_forms import FormWTFDeleteGenre
 from APP_FILMS_164.genres.gestion_genres_wtf_forms import FormWTFUpdateGenre
 
@@ -97,7 +97,7 @@ def genres_afficher(order_by, id_user_sel):
 
 @app.route("/genres_ajouter", methods=['GET', 'POST'])
 def genres_ajouter_wtf():
-    form = FormWTFAjouterGenres()
+    form = AjouterUtilisateur()
     if request.method == "POST":
         try:
             if form.validate_on_submit():
@@ -105,13 +105,16 @@ def genres_ajouter_wtf():
                 name_genre = name_genre_wtf.lower()
                 email_texte_wtf = form.email_texte_wtf.data
                 email_texte = email_texte_wtf.lower()
+                password_texte_wtf = form.password_texte_wtf.data
+                password_texte = password_texte_wtf.lower()
 
                 valeurs_insertion_dictionnaire = {"value_nom_user": name_genre,
-                                                  "value_email_user": email_texte
+                                                  "value_email_user": email_texte,
+                                                  "value_password_user": password_texte
                                                   }
                 print("valeurs_insertion_dictionnaire ", valeurs_insertion_dictionnaire)
 
-                strsql_inserutilisateur = """INSERT INTO t_utilisateur (id_user,nom_user, email_user) VALUES (NULL,%(value_nom_user)s) """
+                strsql_inserutilisateur = """INSERT INTO t_utilisateur (id_user,nom_user, email_user, password) VALUES (NULL,%(value_nom_user)s,%(value_email_user)s,%(value_password_user)s) """
                 with DBconnection() as mconn_bd:
                     mconn_bd.execute(strsql_inserutilisateur, valeurs_insertion_dictionnaire)
 

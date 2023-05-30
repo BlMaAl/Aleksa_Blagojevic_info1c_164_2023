@@ -25,6 +25,13 @@
 							<span style="color: red;">[{{ error }}]</span>
 						{% endfor %}
 					</p>
+					<p>
+						{{ form.password_texte_wtf.label }}<br>
+						{{ form.password_texte_wtf(size=32) }}<br>
+						{% for error in form.password_texte_wtf.errors %}
+							<span style="color: red;">[{{ error }}]</span>
+						{% endfor %}
+					</p>
 				</div>
 				{{ form.submit(class="btn btn-primary") }}
 			</form>
