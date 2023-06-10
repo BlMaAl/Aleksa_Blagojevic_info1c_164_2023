@@ -1,28 +1,9 @@
--- OM 2021.02.17
--- FICHIER MYSQL POUR FAIRE FONCTIONNER LES EXEMPLES
--- DE REQUETES MYSQL
--- Database: aleksa_blagojevic_martins_info1c_mpd
-
--- Destruction de la BD si elle existe.
--- Pour être certain d'avoir la dernière version des données
-
-DROP DATABASE IF EXISTS aleksa_blagojevic_martins_info1c_mpd;
-
--- Création d'un nouvelle base de donnée
-
-CREATE DATABASE IF NOT EXISTS aleksa_blagojevic_martins_info1c_mpd;
-
--- Utilisation de cette base de donnée
-
-USE aleksa_blagojevic_martins_info1c_mpd;
--- --------------------------------------------------------
-
 -- phpMyAdmin SQL Dump
 -- version 5.1.2
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:3306
--- Généré le : mer. 29 mars 2023 à 07:07
+-- Généré le : sam. 10 juin 2023 à 13:36
 -- Version du serveur : 5.7.24
 -- Version de PHP : 8.0.1
 
@@ -43,70 +24,64 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Structure de la table `couleur`
+-- Structure de la table `t_categorie`
 --
 
-CREATE TABLE `couleur` (
-  `couleur_text` text NOT NULL,
-  `couleur_fond` text NOT NULL
+CREATE TABLE `t_categorie` (
+  `id_categorie` int(11) NOT NULL,
+  `nom_categorie` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `image`
+-- Structure de la table `t_question_reponse`
 --
 
-CREATE TABLE `image` (
-  `id_image` int(11) NOT NULL,
-  `date_creer` datetime NOT NULL,
-  `text_generation_image` text NOT NULL
+CREATE TABLE `t_question_reponse` (
+  `id_question_reponse` int(11) NOT NULL,
+  `question` text NOT NULL,
+  `question_image` varchar(50) NOT NULL,
+  `reponse` text NOT NULL,
+  `reponse_image` varchar(50) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `police`
+-- Structure de la table `t_questreponse_avoir_categorie`
 --
 
-CREATE TABLE `police` (
-  `id_police` int(11) NOT NULL,
-  `police_caractere` int(11) NOT NULL
+CREATE TABLE `t_questreponse_avoir_categorie` (
+  `id_questreponse_avoir_categorie` int(11) NOT NULL,
+  `fk_question_reponse` int(11) NOT NULL,
+  `fk_categorie` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `question`
+-- Structure de la table `t_utilisateurs`
 --
 
-CREATE TABLE `question` (
-  `id_question` int(11) NOT NULL,
-  `text` int(11) NOT NULL
+CREATE TABLE `t_utilisateurs` (
+  `id_utilisateur` int(11) NOT NULL,
+  `nom_utilisateur` varchar(50) NOT NULL,
+  `prenom_utilisateur` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `réponse`
+-- Structure de la table `t_utilisateurs_creer_question_reponses`
 --
 
-CREATE TABLE `réponse` (
-  `id_reponse` int(11) NOT NULL,
-  `text` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `utilisateur`
---
-
-CREATE TABLE `t_utilisateur` (
-  `id_user` int(11) NOT NULL,
-  `nom_user` text NOT NULL,
-  `email_user` text NOT NULL,
-  `password` text NOT NULL
+CREATE TABLE `t_utilisateurs_creer_question_reponses` (
+  `id_utilisateurs_creer_question_reponses` int(11) NOT NULL,
+  `fk_utilisateur` int(11) NOT NULL,
+  `fk_question_reponse` int(11) NOT NULL,
+  `date_creation_qr` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -114,68 +89,90 @@ CREATE TABLE `t_utilisateur` (
 --
 
 --
--- Index pour la table `image`
+-- Index pour la table `t_categorie`
 --
-ALTER TABLE `image`
-  ADD PRIMARY KEY (`id_image`);
+ALTER TABLE `t_categorie`
+  ADD PRIMARY KEY (`id_categorie`);
 
 --
--- Index pour la table `police`
+-- Index pour la table `t_question_reponse`
 --
-ALTER TABLE `police`
-  ADD PRIMARY KEY (`id_police`);
+ALTER TABLE `t_question_reponse`
+  ADD PRIMARY KEY (`id_question_reponse`);
 
 --
--- Index pour la table `question`
+-- Index pour la table `t_questreponse_avoir_categorie`
 --
-ALTER TABLE `question`
-  ADD PRIMARY KEY (`id_question`);
+ALTER TABLE `t_questreponse_avoir_categorie`
+  ADD PRIMARY KEY (`id_questreponse_avoir_categorie`),
+  ADD KEY `fk_question_reponse` (`fk_question_reponse`),
+  ADD KEY `fk_categorie` (`fk_categorie`);
 
 --
--- Index pour la table `réponse`
+-- Index pour la table `t_utilisateurs`
 --
-ALTER TABLE `réponse`
-  ADD PRIMARY KEY (`id_reponse`);
+ALTER TABLE `t_utilisateurs`
+  ADD PRIMARY KEY (`id_utilisateur`);
 
 --
--- Index pour la table `utilisateur`
+-- Index pour la table `t_utilisateurs_creer_question_reponses`
 --
-ALTER TABLE `t_utilisateur`
-  ADD PRIMARY KEY (`id_user`);
+ALTER TABLE `t_utilisateurs_creer_question_reponses`
+  ADD PRIMARY KEY (`id_utilisateurs_creer_question_reponses`),
+  ADD KEY `fk_utilisateur` (`fk_utilisateur`),
+  ADD KEY `fk_question_reponse` (`fk_question_reponse`);
 
 --
 -- AUTO_INCREMENT pour les tables déchargées
 --
 
 --
--- AUTO_INCREMENT pour la table `image`
+-- AUTO_INCREMENT pour la table `t_categorie`
 --
-ALTER TABLE `image`
-  MODIFY `id_image` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `t_categorie`
+  MODIFY `id_categorie` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT pour la table `police`
+-- AUTO_INCREMENT pour la table `t_question_reponse`
 --
-ALTER TABLE `police`
-  MODIFY `id_police` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `t_question_reponse`
+  MODIFY `id_question_reponse` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT pour la table `question`
+-- AUTO_INCREMENT pour la table `t_questreponse_avoir_categorie`
 --
-ALTER TABLE `question`
-  MODIFY `id_question` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `t_questreponse_avoir_categorie`
+  MODIFY `id_questreponse_avoir_categorie` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT pour la table `réponse`
+-- AUTO_INCREMENT pour la table `t_utilisateurs`
 --
-ALTER TABLE `réponse`
-  MODIFY `id_reponse` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `t_utilisateurs`
+  MODIFY `id_utilisateur` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT pour la table `utilisateur`
+-- AUTO_INCREMENT pour la table `t_utilisateurs_creer_question_reponses`
 --
-ALTER TABLE `t_utilisateur`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `t_utilisateurs_creer_question_reponses`
+  MODIFY `id_utilisateurs_creer_question_reponses` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Contraintes pour les tables déchargées
+--
+
+--
+-- Contraintes pour la table `t_questreponse_avoir_categorie`
+--
+ALTER TABLE `t_questreponse_avoir_categorie`
+  ADD CONSTRAINT `t_questreponse_avoir_categorie_ibfk_1` FOREIGN KEY (`fk_question_reponse`) REFERENCES `t_question_reponse` (`id_question_reponse`),
+  ADD CONSTRAINT `t_questreponse_avoir_categorie_ibfk_2` FOREIGN KEY (`fk_categorie`) REFERENCES `t_categorie` (`id_categorie`);
+
+--
+-- Contraintes pour la table `t_utilisateurs_creer_question_reponses`
+--
+ALTER TABLE `t_utilisateurs_creer_question_reponses`
+  ADD CONSTRAINT `t_utilisateurs_creer_question_reponses_ibfk_1` FOREIGN KEY (`fk_utilisateur`) REFERENCES `t_utilisateurs` (`id_utilisateur`),
+  ADD CONSTRAINT `t_utilisateurs_creer_question_reponses_ibfk_2` FOREIGN KEY (`fk_question_reponse`) REFERENCES `t_question_reponse` (`id_question_reponse`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
