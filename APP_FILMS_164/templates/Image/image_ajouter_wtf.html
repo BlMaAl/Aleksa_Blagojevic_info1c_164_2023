@@ -1,27 +1,48 @@
 {% extends "base.html" %}
-{% block title %} Ajouter un GENRE (WTF) {% endblock %}
+{% block title %} Ajouter des images (WTF) {% endblock %}
 {% block body %}
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
 			<p>
-				Ajouter votre nom et prenom
+				Ajouter votre question, réponse et images
 			</p>
 			<form action="" method="POST" novalidate>
 				<!-- Protection contre les attaques Cross-Site Request Forgery (CSRF) -->
 				{{ form.hidden_tag() }}
 				<div class="form-group">
 					<p>
-						{{ form.nom_user_wtf.label }}<br>
-						{{ form.nom_user_wtf(size=32) }}<br>
-						{% for error in form.nom_user_wtf.errors %}
+						{{ form.question_user_wtf.label }}<br>
+						{{ form.question_user_wtf(size=32) }}<br>
+						{% for error in form.question_user_wtf.errors %}
 							<span style="color: red;">[{{ error }}]</span>
 						{% endfor %}
 					</p>
 					<p>
-						{{ form.prenom_user_wtf.label }}<br>
-						{{ form.prenom_user_wtf(size=32) }}<br>
-						{% for error in form.prenom_user_wtf.errors %}
+						{{ form.question_image_user_wtf.label }}<br>
+						{{ form.question_image_user_wtf(size=32) }}<br>
+						{% for error in form.question_image_user_wtf.errors %}
+							<span style="color: red;">[{{ error }}]</span>
+						{% endfor %}
+					</p>
+					<p>
+						{{ form.reponse_user_wtf.label }}<br>
+						{{ form.reponse_user_wtf(size=32) }}<br>
+						{% for error in form.reponse_user_wtf.errors %}
+							<span style="color: red;">[{{ error }}]</span>
+						{% endfor %}
+					</p>
+					<p>
+						{{ form.reponse_image_user_wtf.label }}<br>
+						{{ form.reponse_image_user_wtf(size=32) }}<br>
+						{% for error in form.reponse_image_user_wtf.errors %}
+							<span style="color: red;">[{{ error }}]</span>
+						{% endfor %}
+					</p>
+					<p>
+						{{ form.date_user_wtf.label }}<br>
+						{{ form.date_user_wtf(size=32) }}<br>
+						{% for error in form.date_user_wtf.errors %}
 							<span style="color: red;">[{{ error }}]</span>
 						{% endfor %}
 					</p>

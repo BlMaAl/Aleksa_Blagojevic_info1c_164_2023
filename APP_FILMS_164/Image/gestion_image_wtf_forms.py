@@ -4,70 +4,51 @@
     Gestion des formulaires avec WTF
 """
 from flask_wtf import FlaskForm
-from wtforms import StringField, DateField
+from wtforms import StringField, IntegerField, DateField
 from wtforms import SubmitField
-from wtforms.validators import Length, InputRequired, DataRequired
+from wtforms.validators import Length, InputRequired, NumberRange, DataRequired
 from wtforms.validators import Regexp
+from wtforms.widgets import TextArea
 
 
-class AjouterUtilisateur(FlaskForm):
+class AjouterImage(FlaskForm):
     """
         Dans le formulaire "image_ajouter_wtf.html" on impose que le champ soit rempli.
         Définition d'un "bouton" submit avec un libellé personnalisé.
     """
-    nom_user_regexp = "^([A-Z]|[a-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ]*['\- ]?[A-Za-zÀ-ÖØ-öø-ÿ]+$"
-    prenom_genre_regexp = "^([A-Z]|[a-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ]*['\- ]?[A-Za-zÀ-ÖØ-öø-ÿ]+$"
+    question_user_wtf = StringField("Nom de la question ", validators=[Length(min=2, max=2000, message="min 2 max 20")
+                                                                       ])
+    question_image_user_wtf = StringField("Image de la question ", widget=TextArea())
 
-    nom_user_wtf = StringField("Mettre le nom ", validators=[Length(min=2, max=100, message="min 2 max 100"),
-                                                                   Regexp(nom_user_regexp,
-                                                                          message="Pas de chiffres, de caractères "
-                                                                                  "spéciaux, "
-                                                                                  "d'espace à double, de double "
-                                                                                  "apostrophe, de double trait union")
-                                                                   ])
-    prenom_user_wtf = StringField("Mettre le prenom", validators=[Length(min=2, max=100, message="min 2 max 100"),
-                                            Regexp(prenom_genre_regexp,
-                                                   message="Pas de chiffres, de caractères "
-                                                           "spéciaux, "
-                                                           "d'espace à double, de double "
-                                                           "apostrophe, de double trait union")
-                                            ])
+    reponse_user_wtf = StringField("Nom de la réponse ", validators=[Length(min=2, max=2000, message="min 2 max 20")
+                                                                ])
+    reponse_image_user_wtf = StringField("Image de la réponse ", widget=TextArea())
 
-    submit = SubmitField("Enregistrer texte")
+    date_user_wtf = DateField("Date de sortie du film", validators=[InputRequired("Date obligatoire"),
+                                                                                 DataRequired("Date non valide")])
+
+    submit = SubmitField("Enregistrer la question")
 
 
-class FormWTFUpdateGenre(FlaskForm):
+class UpdateImage(FlaskForm):
     """
         Dans le formulaire "image_update_wtf.html" on impose que le champ soit rempli.
         Définition d'un "bouton" submit avec un libellé personnalisé.
     """
-    nom_user_update_regexp = "^([A-Z]|[a-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ]*['\- ]?[A-Za-zÀ-ÖØ-öø-ÿ]+$"
-    prenom_user_update_regexp = "^([A-Z]|[a-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ]*['\- ]?[A-Za-zÀ-ÖØ-öø-ÿ]+$"
-    
-    nom_user_update_wtf = StringField("Mettre le texte à convertire ", validators=[Length(min=2, max=100, message="min 2 max 100"),
-                                                                          Regexp(nom_user_update_regexp,
-                                                                                 message="Pas de chiffres, de "
-                                                                                         "caractères "
-                                                                                         "spéciaux, "
-                                                                                         "d'espace à double, de double "
-                                                                                         "apostrophe, de double trait "
-                                                                                         "union")
-                                                                          ])
-    prenom_user_update_wtf = StringField("Mettre le texte à convertire ", validators=[Length(min=2, max=100, message="min 2 max 100"),
-                                                                           Regexp(prenom_user_update_regexp,
-                                                                                  message="Pas de chiffres, de "
-                                                                                          "caractères "
-                                                                                          "spéciaux, "
-                                                                                          "d'espace à double, de double "
-                                                                                          "apostrophe, de double trait "
-                                                                                          "union")
-                                                                           ])
-    date_genre_wtf_essai = DateField("Essai date", validators=[InputRequired("Date obligatoire"),
-                                                               DataRequired("Date non valide")])
-    submit = SubmitField("Update genre")
+    question_user_update_wtf = StringField("Nom de la question ", validators=[Length(min=2, max=2000, message="min 2 max 20")
+                                                                       ])
+    question_image_user_update_wtf = StringField("Image de la question ", widget=TextArea())
+
+    reponse_user_update_wtf = StringField("Nom de la réponse ", validators=[Length(min=2, max=2000, message="min 2 max 20")
+                                                                     ])
+    reponse_image_user_update_wtf = StringField("Image de la réponse ", widget=TextArea())
+
+    date_user_update_wtf = DateField("Date de sortie du film", validators=[InputRequired("Date obligatoire"),
+                                                                                 DataRequired("Date non valide")])
+    submit = SubmitField("Update film")
 
 
-class FormWTFDeleteGenre(FlaskForm):
+class DeleteImage(FlaskForm):
     """
         Dans le formulaire "image_delete_wtf.html"
 
@@ -76,7 +57,11 @@ class FormWTFDeleteGenre(FlaskForm):
         submit_btn_conf_del : Bouton de confirmation pour effacer un "genre".
         submit_btn_annuler : Bouton qui permet d'afficher la table "utilisateur".
     """
-    nom_genre_delete_wtf = StringField("Effacer ce genre")
-    submit_btn_del = SubmitField("Effacer genre")
-    submit_btn_conf_del = SubmitField("Etes-vous sur d'effacer ?")
+    question_user_delete_wtf = StringField("Effacer la question")
+    question_image_user_delete_wtf = StringField("Effacer l'image de la question")
+    reponse_user_delete_wtf = StringField("Effacer la réponse")
+    reponse_image_user_delete_wtf = StringField("Effacer l'image de la réponse")
+    date_user_delete_wtf = StringField("Effacer la date")
+    submit_btn_conf_del = SubmitField("Effacer la question/réponse")
+    submit_btn_del = SubmitField("Confirmer la suppression")
     submit_btn_annuler = SubmitField("Annuler")

@@ -12,16 +12,37 @@
 				{{ form_update.hidden_tag() }}
 				<div class="form-group">
 					<p>
-						{{ form_update.nom_user_update_wtf.label }}<br>
-						{{ form_update.nom_user_update_wtf(size=32) }}<br>
-						{% for error in form_update.nom_user_update_wtf.errors %}
+						{{ form_update.question_user_update_wtf.label }}<br>
+						{{ form_update.question_user_update_wtf(size=32) }}<br>
+						{% for error in form_update.question_user_update_wtf.errors %}
 							<span style="color: red;">[{{ error }}]</span>
 						{% endfor %}
 					</p>
 					<p>
-						{{ form_update.date_genre_wtf_essai.label }}<br>
-						{{ form_update.date_genre_wtf_essai(size=32) }}<br>
-						{% for error in form_update.date_genre_wtf_essai.errors %}
+						{{ form_update.question_image_user_update_wtf.label }}<br>
+						{{ form_update.question_image_user_update_wtf(size=32) }}<br>
+						{% for error in form_update.question_image_user_update_wtf.errors %}
+							<span style="color: red;">[{{ error }}]</span>
+						{% endfor %}
+					</p>
+					<p>
+						{{ form_update.reponse_user_update_wtf.label }}<br>
+						{{ form_update.reponse_user_update_wtf(size=32) }}<br>
+						{% for error in form_update.reponse_user_update_wtf.errors %}
+							<span style="color: red;">[{{ error }}]</span>
+						{% endfor %}
+					</p>
+					<p>
+						{{ form_update.reponse_image_user_update_wtf.label }}<br>
+						{{ form_update.reponse_image_user_update_wtf(size=32) }}<br>
+						{% for error in form_update.reponse_image_user_update_wtf.errors %}
+							<span style="color: red;">[{{ error }}]</span>
+						{% endfor %}
+					</p>
+					<p>
+						{{ form_update.date_user_update_wtf.label }}<br>
+						{{ form_update.date_user_update_wtf(size=32) }}<br>
+						{% for error in form_update.date_user_update_wtf.errors %}
 							<span style="color: red;">[{{ error }}]</span>
 						{% endfor %}
 					</p>

@@ -39,9 +39,37 @@
 
 				<div class="form-group">
 					<p>
-						{{ form_delete.nom_genre_delete_wtf.label }}<br>
-						{{ form_delete.nom_genre_delete_wtf(size=32, readonly=true) }}<br>
-						{% for error in form_delete.nom_genre_delete_wtf.errors %}
+						{{ form_delete.question_user_delete_wtf.label }}<br>
+						{{ form_delete.question_user_delete_wtf(size=32, readonly=true) }}<br>
+						{% for error in form_delete.question_user_delete_wtf.errors %}
+							<span style="color: red;">[{{ error }}]</span>
+						{% endfor %}
+					</p>
+					<p>
+						{{ form_delete.question_image_user_delete_wtf.label }}<br>
+						{{ form_delete.question_image_user_delete_wtf(size=32, readonly=true) }}<br>
+						{% for error in form_delete.question_image_user_delete_wtf.errors %}
+							<span style="color: red;">[{{ error }}]</span>
+						{% endfor %}
+					</p>
+					<p>
+						{{ form_delete.reponse_user_delete_wtf.label }}<br>
+						{{ form_delete.reponse_user_delete_wtf(size=32, readonly=true) }}<br>
+						{% for error in form_delete.reponse_user_delete_wtf.errors %}
+							<span style="color: red;">[{{ error }}]</span>
+						{% endfor %}
+					</p>
+					<p>
+						{{ form_delete.reponse_image_user_delete_wtf.label }}<br>
+						{{ form_delete.reponse_image_user_delete_wtf(size=32, readonly=true) }}<br>
+						{% for error in form_delete.reponse_image_user_delete_wtf.errors %}
+							<span style="color: red;">[{{ error }}]</span>
+						{% endfor %}
+					</p>
+					<p>
+						{{ form_delete.date_user_delete_wtf.label }}<br>
+						{{ form_delete.date_user_delete_wtf(size=32, readonly=true) }}<br>
+						{% for error in form_delete.date_user_delete_wtf.errors %}
 							<span style="color: red;">[{{ error }}]</span>
 						{% endfor %}
 					</p>

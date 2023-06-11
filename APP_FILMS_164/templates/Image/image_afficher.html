@@ -15,15 +15,27 @@
                             Id
                         </th>
                         <th class="align-middle">
-                            Nom
+                            Question
                         </th>
                         <th class="align-middle">
-							Prenom
+							Question-Image
                         </th>
                         <th class="align-middle">
+							Réponse
+                        </th>
+                        <th class="align-middle">
+							Réponse-Image
+                        </th>
+						<th class="align-middle">
+							Date
+                        </th>
+						<th class="align-middle">
 
                         </th>
-                        <th class="align-middle">
+						<th class="align-middle">
+
+                        </th>
+						<th class="align-middle">
 
                         </th>
                     </tr>
@@ -34,22 +46,31 @@
 				<tbody>
 					<tr>
 						<td class="align-middle">
-							{{ row.id_utilisateur }}
+							{{ row.id_question_reponse }}
 						</td>
 						<td class="align-middle">
-							{{ row.nom_utilisateur }}
+							{{ row.question }}
 						</td>
 						<td class="align-middle">
-							{{ row.prenom_utilisateur }}
+							<img class="img" src={{ row.question_image|default(None, True) }} style="border: 0;display:block; width:150px; max-height:auto;"  alt = "image masquée FFP8 (in COVID-19 Memory) (absente) mod 164">
+						</td>
+						<td class="align-middle">
+							{{ row.reponse }}
+						</td>
+						<td class="align-middle">
+							<img class="img" src={{ row.reponse_image|default(None, True) }} style="border: 0;display:block; width:150px; max-height:auto;"  alt = "image masquée FFP8 (in COVID-19 Memory) (absente) mod 164">
+						</td>
+						<td class="align-middle">
+							{{ row.date }}
 						</td>
 						<td class="text-center" class="align-middle">
-							<a class="btn btn-primary" href="{{ url_for('genres_ajouter_wtf') }}" role="button">Ajouter</a>
+							<a class="btn btn-primary" href="{{ url_for('image_ajouter_wtf') }}" role="button">Ajouter</a>
 						</td>
 						<td class="text-center" class="align-middle">
-							<a class="btn btn-warning" href="{{ url_for('genre_update_wtf', id_user_btn_edit_html=row.id_utilisateur) }}" role="button">Edit</a>
+							<a class="btn btn-warning" href="{{ url_for('image_update_wtf', id_image_btn_edit_html=row.id_question_reponse) }}" role="button">Edit</a>
 						</td>
 						<td class="text-center" class="align-middle">
-							<a class="btn btn-danger" href="{{ url_for('genre_delete_wtf', id_user_btn_delete_html=row.id_utilisateur) }}" role="button">Delete</a>
+							<a class="btn btn-danger" href="{{ url_for('image_delete_wtf', id_image_btn_delete_html=row.id_question_reponse) }}" role="button">Delete</a>
 						</td>
 					</tr>
 				</tbody>
@@ -57,10 +78,10 @@
 				<tbody>
 					<tr>
 						<td>
-							Aucun nom et prenom.
+							Aucune question, réponse et d'image.
 						</td>
 						<td>
-							<a class="btn btn-primary" href="{{ url_for('genres_ajouter_wtf') }}" role="button">Ajouter</a>
+							<a class="btn btn-primary" href="{{ url_for('image_ajouter_wtf') }}" role="button">Ajouter</a>
 						</td>
 					</tr>
 				</tbody>

@@ -43,11 +43,11 @@ def genres_afficher(order_by, id_user_sel):
                     # donc, je précise les champs à afficher
                     # Constitution d'un dictionnaire pour associer l'id du genre sélectionné avec un nom de variable
                     valeur_id_user_selected_dictionnaire = {"value_id_user_selected": id_user_sel}
-                    strsql_genres_afficher = """SELECT id_utilisateur, nom_utilisateur, prenom_utilisateur  FROM t_utilisateurs WHERE id_utilisateur = %(value_id_user_selected)s"""
+                    strsql_genres_afficher = """SELECT id_utilisateur, nom_utilisateur, prenom_utilisateur FROM t_utilisateurs WHERE id_utilisateur = %(value_id_user_selected)s"""
 
                     mc_afficher.execute(strsql_genres_afficher, valeur_id_user_selected_dictionnaire)
                 else:
-                    strsql_genres_afficher = """SELECT id_utilisateur, nom_utilisateur, prenom_utilisateur  FROM t_utilisateurs ORDER BY id_utilisateur DESC"""
+                    strsql_genres_afficher = """SELECT id_utilisateur, nom_utilisateur, prenom_utilisateur FROM t_utilisateurs ORDER BY id_utilisateur DESC"""
 
                     mc_afficher.execute(strsql_genres_afficher)
 
@@ -72,7 +72,7 @@ def genres_afficher(order_by, id_user_sel):
                                           f"{Exception_genres_afficher}")
 
     # Envoie la page "HTML" au serveur.
-    return render_template("genres/image_afficher.html", data=data_genres)
+    return render_template("genres/genres_afficher.html", data=data_genres)
 
 
 """
@@ -137,7 +137,7 @@ def genres_ajouter_wtf():
     
     Paramètres : sans
     
-    But : Editer(update) un genre qui a été sélectionné dans le formulaire "image_afficher.html"
+    But : Editer(update) un genre qui a été sélectionné dans le formulaire "genres_afficher.html"
     
     Remarque :  Dans le champ "nom_user_update_wtf" du formulaire "genres/image_update_wtf.html",
                 le contrôle de la saisie s'effectue ici en Python.
@@ -214,7 +214,7 @@ def genre_update_wtf():
     
     Paramètres : sans
     
-    But : Effacer(delete) un genre qui a été sélectionné dans le formulaire "image_afficher.html"
+    But : Effacer(delete) un genre qui a été sélectionné dans le formulaire "genres_afficher.html"
     
     Remarque :  Dans le champ "nom_genre_delete_wtf" du formulaire "genres/image_delete_wtf.html",
                 le contrôle de la saisie est désactivée. On doit simplement cliquer sur "DELETE"
