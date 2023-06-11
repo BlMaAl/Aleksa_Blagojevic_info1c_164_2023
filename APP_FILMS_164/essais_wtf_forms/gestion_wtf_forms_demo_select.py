@@ -33,7 +33,7 @@ from APP_FILMS_164.essais_wtf_forms.wtf_forms_demo_select import DemoFormSelectW
 @app.route("/demo_select_wtf", methods=['GET', 'POST'])
 def demo_select_wtf():
     genre_selectionne = None
-    # Objet formulaire pour montrer une liste déroulante basé sur la table "t_utilisateur"
+    # Objet formulaire pour montrer une liste déroulante basé sur la table "t_utilisateurs"
     form_demo = DemoFormSelectWTF()
     try:
         print("form_demo.submit_btn_ok_dplisutilisateur.data  ", form_demo.submit_btn_ok_dplisutilisateur.data)
@@ -53,7 +53,7 @@ def demo_select_wtf():
 
         if request.method == "GET":
             with DBconnection() as mc_afficher:
-                strsql_genres_afficher = """SELECT id_utilisateur, nom_utilisateur FROM t_utilisateur ORDER BY id_utilisateur ASC"""
+                strsql_genres_afficher = """SELECT id_utilisateur, nom_utilisateur FROM t_utilisateurs ORDER BY id_utilisateur ASC"""
                 mc_afficher.execute(strsql_genres_afficher)
 
             data_genres = mc_afficher.fetchall()
