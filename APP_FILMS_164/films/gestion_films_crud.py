@@ -116,7 +116,7 @@ def film_update_wtf():
             # Afficher seulement le film modifié, "ASC" et l'"id_film_update"
             return redirect(url_for('films_genres_afficher', id_film_sel=id_film_update))
         elif request.method == "GET":
-            # Opération sur la BD pour récupérer "id_film" et "nom_user" de la "utilisateur"
+            # Opération sur la BD pour récupérer "id_film" et "nom_utilisateur" de la "utilisateur"
             str_sql_id_film = "SELECT * FROM t_film WHERE id_film = %(value_id_film)s"
             valeur_select_dictionnaire = {"value_id_film": id_film_update}
             with DBconnection() as mybd_conn:

@@ -15,28 +15,23 @@ class AjouterUtilisateur(FlaskForm):
         Dans le formulaire "genres_ajouter_wtf.html" on impose que le champ soit rempli.
         Définition d'un "bouton" submit avec un libellé personnalisé.
     """
-    nom_genre_regexp = "^([A-Z]|[a-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ]*['\- ]?[A-Za-zÀ-ÖØ-öø-ÿ]+$"
-    email_genre_regexp = '(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))'
+    nom_user_regexp = "^([A-Z]|[a-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ]*['\- ]?[A-Za-zÀ-ÖØ-öø-ÿ]+$"
+    prenom_genre_regexp = "^([A-Z]|[a-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ]*['\- ]?[A-Za-zÀ-ÖØ-öø-ÿ]+$"
 
-    nom_genre_wtf = StringField("Mettre le texte à convertire ", validators=[Length(min=2, max=100, message="min 2 max 100"),
-                                                                   Regexp(nom_genre_regexp,
+    nom_user_wtf = StringField("Mettre le nom ", validators=[Length(min=2, max=100, message="min 2 max 100"),
+                                                                   Regexp(nom_user_regexp,
                                                                           message="Pas de chiffres, de caractères "
                                                                                   "spéciaux, "
                                                                                   "d'espace à double, de double "
                                                                                   "apostrophe, de double trait union")
                                                                    ])
-    email_texte_wtf = StringField("Placer email ",
-                                  validators=[Length(min=2, max=100, message="min 2 max 100"),
-                                              Regexp(email_genre_regexp,
-                                                     message="Pas de chiffres, de caractères "
-                                                             "spéciaux, d'espace à double, "
-                                                             "de double apostrophe, "
-                                                             "de double trait union")
-                                              ])
-
-    password_texte_wtf = StringField("Votre mot de passe ",
-                                  validators=[Length(min=2, max=100, message="min 2 max 100")
-                                              ])
+    prenom_user_wtf = StringField("Mettre le prenom", validators=[Length(min=2, max=100, message="min 2 max 100"),
+                                            Regexp(prenom_genre_regexp,
+                                                   message="Pas de chiffres, de caractères "
+                                                           "spéciaux, "
+                                                           "d'espace à double, de double "
+                                                           "apostrophe, de double trait union")
+                                            ])
 
     submit = SubmitField("Enregistrer texte")
 
@@ -46,9 +41,11 @@ class FormWTFUpdateGenre(FlaskForm):
         Dans le formulaire "genre_update_wtf.html" on impose que le champ soit rempli.
         Définition d'un "bouton" submit avec un libellé personnalisé.
     """
-    nom_genre_update_regexp = "^([A-Z]|[a-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ]*['\- ]?[A-Za-zÀ-ÖØ-öø-ÿ]+$"
-    nom_genre_update_wtf = StringField("Mettre le texte à convertire ", validators=[Length(min=2, max=100, message="min 2 max 100"),
-                                                                          Regexp(nom_genre_update_regexp,
+    nom_user_update_regexp = "^([A-Z]|[a-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ]*['\- ]?[A-Za-zÀ-ÖØ-öø-ÿ]+$"
+    prenom_user_update_regexp = "^([A-Z]|[a-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ]*['\- ]?[A-Za-zÀ-ÖØ-öø-ÿ]+$"
+    
+    nom_user_update_wtf = StringField("Mettre le texte à convertire ", validators=[Length(min=2, max=100, message="min 2 max 100"),
+                                                                          Regexp(nom_user_update_regexp,
                                                                                  message="Pas de chiffres, de "
                                                                                          "caractères "
                                                                                          "spéciaux, "
@@ -56,6 +53,15 @@ class FormWTFUpdateGenre(FlaskForm):
                                                                                          "apostrophe, de double trait "
                                                                                          "union")
                                                                           ])
+    prenom_user_update_wtf = StringField("Mettre le texte à convertire ", validators=[Length(min=2, max=100, message="min 2 max 100"),
+                                                                           Regexp(prenom_user_update_regexp,
+                                                                                  message="Pas de chiffres, de "
+                                                                                          "caractères "
+                                                                                          "spéciaux, "
+                                                                                          "d'espace à double, de double "
+                                                                                          "apostrophe, de double trait "
+                                                                                          "union")
+                                                                           ])
     date_genre_wtf_essai = DateField("Essai date", validators=[InputRequired("Date obligatoire"),
                                                                DataRequired("Date non valide")])
     submit = SubmitField("Update genre")

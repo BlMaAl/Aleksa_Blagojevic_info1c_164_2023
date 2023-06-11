@@ -6,7 +6,7 @@
 
     Cela permet de construire la base de donnée à partir de votre fichier DUMP en SQL
     obtenu par l'exportation de votre bd dans PhpMyAdmin.
-    Le fichier .env doit être correctement paramétré. (host, user, password, nomdevotrebd)
+    Le fichier .env doit être correctement paramétré. (host, user, nomdevotrebd)
     Le fichier DUMP de la BD doit se trouver dans le répertoire "database" de votre projet Python.
 
     On signale les erreurs importantes

@@ -20,9 +20,16 @@ class MonPremierWTForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired(message="Mot de passe indispensable !")])
 
-    nom_genre_regexp = "^([A-Z]|[a-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ]*['\- ]?[A-Za-zÀ-ÖØ-öø-ÿ]+$"
-    nom_genre_wtf = StringField("Mettre le texte à convertire ", validators=[Length(min=2, max=100, message="min 2 max 100"),
-                                                                   Regexp(nom_genre_regexp,
+    nom_user_regexp = "^([A-Z]|[a-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ]*['\- ]?[A-Za-zÀ-ÖØ-öø-ÿ]+$"
+    nom_user_wtf = StringField("Mettre le texte à convertire ", validators=[Length(min=2, max=100, message="min 2 max 100"),
+                                                                   Regexp(nom_user_regexp,
+                                                                          message="Pas de chiffres, de caractères "
+                                                                                  "spéciaux, d'espace à double, "
+                                                                                  "de double apostrophe, "
+                                                                                  "de double trait union")
+                                                                   ])
+    prenom_user_wtf = StringField("Mettre le texte à convertire ", validators=[Length(min=2, max=100, message="min 2 max 100"),
+                                                                   Regexp(nom_user_regexp,
                                                                           message="Pas de chiffres, de caractères "
                                                                                   "spéciaux, d'espace à double, "
                                                                                   "de double apostrophe, "

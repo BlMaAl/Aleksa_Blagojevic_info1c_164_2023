@@ -33,9 +33,9 @@ def films_genres_afficher(id_film_sel):
         try:
             with DBconnection() as mc_afficher:
                 strsql_genres_films_afficher_data = """SELECT id_film, nom_film, duree_film, description_film, cover_link_film, date_sortie_film,
-                                                            GROUP_CONCAT(nom_user) as GenresFilms FROM utilisateur_film
+                                                            GROUP_CONCAT(nom_utilisateur) as GenresFilms FROM utilisateur_film
                                                             RIGHT JOIN t_film ON t_film.id_film = utilisateur_film.fk_film
-                                                            LEFT JOIN t_utilisateur ON t_utilisateur.id_user = utilisateur_film.fk_genre
+                                                            LEFT JOIN t_utilisateur ON t_utilisateur.id_utilisateur = utilisateur_film.fk_genre
                                                             GROUP BY id_film"""
                 if id_film_sel == 0:
                     # le paramètre 0 permet d'afficher tous les films
@@ -93,7 +93,7 @@ def ediutilisateur_film_selected():
     if request.method == "GET":
         try:
             with DBconnection() as mc_afficher:
-                strsql_genres_afficher = """SELECT id_user, nom_user FROM t_utilisateur ORDER BY id_user ASC"""
+                strsql_genres_afficher = """SELECT id_utilisateur, nom_utilisateur FROM t_utilisateur ORDER BY id_utilisateur ASC"""
                 mc_afficher.execute(strsql_genres_afficher)
             data_genres_all = mc_afficher.fetchall()
             print("dans ediutilisateur_film_selected ---> data_genres_all", data_genres_all)
@@ -127,14 +127,14 @@ def ediutilisateur_film_selected():
 
             # Dans le composant "tags-selector-tagselect" on doit connaître
             # les genres qui ne sont pas encore sélectionnés.
-            lst_data_genres_films_non_attribues = [item['id_user'] for item in data_genres_films_non_attribues]
+            lst_data_genres_films_non_attribues = [item['id_utilisateur'] for item in data_genres_films_non_attribues]
             session['session_lst_data_genres_films_non_attribues'] = lst_data_genres_films_non_attribues
             print("lst_data_genres_films_non_attribues  ", lst_data_genres_films_non_attribues,
                   type(lst_data_genres_films_non_attribues))
 
             # Dans le composant "tags-selector-tagselect" on doit connaître
             # les genres qui sont déjà sélectionnés.
-            lst_data_genres_films_old_attribues = [item['id_user'] for item in data_genres_films_attribues]
+            lst_data_genres_films_old_attribues = [item['id_utilisateur'] for item in data_genres_films_attribues]
             session['session_lst_data_genres_films_old_attribues'] = lst_data_genres_films_old_attribues
             print("lst_data_genres_films_old_attribues  ", lst_data_genres_films_old_attribues,
                   type(lst_data_genres_films_old_attribues))
@@ -145,9 +145,9 @@ def ediutilisateur_film_selected():
             print(" data_genres_films_attribues ", data_genres_films_attribues, "type ",
                   type(data_genres_films_attribues))
 
-            # Extrait les valeurs contenues dans la table "utilisateurs", colonne "nom_user"
-            # Le composant javascript "tagify" pour afficher les tags n'a pas besoin de l'id_user
-            lst_data_genres_films_non_attribues = [item['nom_user'] for item in data_genres_films_non_attribues]
+            # Extrait les valeurs contenues dans la table "utilisateurs", colonne "nom_utilisateur"
+            # Le composant javascript "tagify" pour afficher les tags n'a pas besoin de l'id_utilisateur
+            lst_data_genres_films_non_attribues = [item['nom_utilisateur'] for item in data_genres_films_non_attribues]
             print("lst_all_genres gf_ediutilisateur_film_selected ", lst_data_genres_films_non_attribues,
                   type(lst_data_genres_films_non_attribues))
 
@@ -209,22 +209,22 @@ def update_genre_film_selected():
 
             # Pour apprécier la facilité de la vie en Python... "les ensembles en Python"
             # https://fr.wikibooks.org/wiki/Programmation_Python/Ensembles
-            # OM 2021.05.02 Une liste de "id_user" qui doivent être effacés de la table intermédiaire "utilisateur_film".
+            # OM 2021.05.02 Une liste de "id_utilisateur" qui doivent être effacés de la table intermédiaire "utilisateur_film".
             lst_diff_genres_delete_b = list(set(old_lst_data_genres_films_attribues) -
                                             set(new_lst_inutilisateur_film_old))
             print("lst_diff_genres_delete_b ", lst_diff_genres_delete_b)
 
-            # Une liste de "id_user" qui doivent être ajoutés à la "utilisateur_film"
+            # Une liste de "id_utilisateur" qui doivent être ajoutés à la "utilisateur_film"
             lst_diff_genres_insert_a = list(
                 set(new_lst_inutilisateur_film_old) - set(old_lst_data_genres_films_attribues))
             print("lst_diff_genres_insert_a ", lst_diff_genres_insert_a)
 
             # SQL pour insérer une nouvelle association entre
-            # "fk_film"/"id_film" et "fk_genre"/"id_user" dans la "utilisateur_film"
+            # "fk_film"/"id_film" et "fk_genre"/"id_utilisateur" dans la "utilisateur_film"
             strsql_inserutilisateur_film = """INSERT INTO utilisateur_film (id_user_film, fk_genre, fk_film)
                                                     VALUES (NULL, %(value_fk_genre)s, %(value_fk_film)s)"""
 
-            # SQL pour effacer une (des) association(s) existantes entre "id_film" et "id_user" dans la "utilisateur_film"
+            # SQL pour effacer une (des) association(s) existantes entre "id_film" et "id_utilisateur" dans la "utilisateur_film"
             strsql_delete_genre_film = """DELETE FROM utilisateur_film WHERE fk_genre = %(value_fk_genre)s AND fk_film = %(value_fk_film)s"""
 
             with DBconnection() as mconn_bd:
@@ -276,19 +276,19 @@ def genres_films_afficher_data(valeur_id_film_selected_dict):
     print("valeur_id_film_selected_dict...", valeur_id_film_selected_dict)
     try:
 
-        strsql_film_selected = """SELECT id_film, nom_film, duree_film, description_film, cover_link_film, date_sortie_film, GROUP_CONCAT(id_user) as GenresFilms FROM utilisateur_film
+        strsql_film_selected = """SELECT id_film, nom_film, duree_film, description_film, cover_link_film, date_sortie_film, GROUP_CONCAT(id_utilisateur) as GenresFilms FROM utilisateur_film
                                         INNER JOIN t_film ON t_film.id_film = utilisateur_film.fk_film
-                                        INNER JOIN t_utilisateur ON t_utilisateur.id_user = utilisateur_film.fk_genre
+                                        INNER JOIN t_utilisateur ON t_utilisateur.id_utilisateur = utilisateur_film.fk_genre
                                         WHERE id_film = %(value_id_film_selected)s"""
 
-        strsql_genres_films_non_attribues = """SELECT id_user, nom_user FROM t_utilisateur WHERE id_user not in(SELECT id_user as idGenresFilms FROM utilisateur_film
+        strsql_genres_films_non_attribues = """SELECT id_utilisateur, nom_utilisateur FROM t_utilisateur WHERE id_utilisateur not in(SELECT id_utilisateur as idGenresFilms FROM utilisateur_film
                                                     INNER JOIN t_film ON t_film.id_film = utilisateur_film.fk_film
-                                                    INNER JOIN t_utilisateur ON t_utilisateur.id_user = utilisateur_film.fk_genre
+                                                    INNER JOIN t_utilisateur ON t_utilisateur.id_utilisateur = utilisateur_film.fk_genre
                                                     WHERE id_film = %(value_id_film_selected)s)"""
 
-        strsql_genres_films_attribues = """SELECT id_film, id_user, nom_user FROM utilisateur_film
+        strsql_genres_films_attribues = """SELECT id_film, id_utilisateur, nom_utilisateur FROM utilisateur_film
                                             INNER JOIN t_film ON t_film.id_film = utilisateur_film.fk_film
-                                            INNER JOIN t_utilisateur ON t_utilisateur.id_user = utilisateur_film.fk_genre
+                                            INNER JOIN t_utilisateur ON t_utilisateur.id_utilisateur = utilisateur_film.fk_genre
                                             WHERE id_film = %(value_id_film_selected)s"""
 
         # Du fait de l'utilisation des "context managers" on accède au curseur grâce au "with".
